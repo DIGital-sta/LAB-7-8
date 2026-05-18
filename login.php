@@ -269,12 +269,12 @@ if (isLoggedIn()) {
                     <div class="auth-group">
                         <label for="regUsername">Логін *</label>
                         <input type="text" id="regUsername" name="username"
-                               placeholder="ivan123" required minlength="3" autocomplete="username">
+                               placeholder="" required minlength="3" autocomplete="username">
                     </div>
                     <div class="auth-group">
                         <label for="regDisplayName">Ім'я</label>
                         <input type="text" id="regDisplayName" name="display_name"
-                               placeholder="Іван Іваненко">
+                               placeholder="">
                     </div>
                 </div>
 
