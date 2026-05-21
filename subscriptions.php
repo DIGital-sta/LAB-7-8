@@ -1,9 +1,5 @@
 <?php
-/**
- * subscriptions.php — Серверний обробник форми підписки.
- * Тепер лише підключає окремий файл з функціями (рефакторинг).
- * Ніякого зайвого коду тут не виконується.
- */
+
 require_once 'subscriptions_functions.php';
 
 header('Content-Type: application/json; charset=utf-8');

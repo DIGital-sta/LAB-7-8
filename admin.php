@@ -3,14 +3,14 @@ require_once 'auth.php';
 require_once 'subscriptions_functions.php';
 requireAdmin();
 
-// Обробка видалення підписника
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
     removeSubscription((int)$_POST['delete_id']);
     header('Location: admin.php?tab=subs');
     exit;
 }
 
-// Обробка зміни статусу замовлення
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_status'])) {
     $ordersFile = __DIR__ . '/storage/orders.ser';
     if (file_exists($ordersFile)) {
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_status'])) {
 
 $subscriptions = getSubscriptions();
 
-// Завантаження замовлень
+
 $ordersFile = __DIR__ . '/storage/orders.ser';
 $orders     = file_exists($ordersFile) ? unserialize(file_get_contents($ordersFile)) : [];
 $orders     = is_array($orders) ? array_reverse($orders) : []; // нові спочатку
@@ -54,7 +54,7 @@ $statusClass = ['new' => '#f59e0b', 'confirmed' => '#3b82f6', 'shipping' => '#8b
         body{font-family:'Andika',sans-serif;background:#0e0e0e;color:#e8e0d8;min-height:100vh}
         a{text-decoration:none;color:inherit}
 
-        /* Header */
+        
         .adm-hdr{background:#141414;border-bottom:1px solid rgba(255,255,255,.07);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
         .adm-logo{font-family:'Playfair Display',serif;font-size:1.4rem;color:#fff}
         .adm-logo em{color:#8b3a2b;font-style:normal}
@@ -65,19 +65,18 @@ $statusClass = ['new' => '#f59e0b', 'confirmed' => '#3b82f6', 'shipping' => '#8b
         .btn-logout{background:#8b3a2b;color:#fff!important;border-radius:8px;padding:.4rem 1rem!important;font-weight:700}
         .btn-logout:hover{background:#a64d3d!important}
 
-        /* Layout */
         .adm-wrap{max-width:1200px;margin:2rem auto;padding:0 1.5rem}
         .adm-title{font-family:'Playfair Display',serif;font-size:1.8rem;color:#fff;margin-bottom:.3rem}
         .adm-sub{color:#666;font-size:.9rem;margin-bottom:2rem}
 
-        /* Stats */
+        
         .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2rem}
         .stat{background:#1a1a1a;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:1.5rem;position:relative;overflow:hidden}
         .stat::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--c,#8b3a2b)}
         .stat-n{font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--c,#8b3a2b);margin:.3rem 0}
         .stat-l{font-size:.8rem;color:#666;text-transform:uppercase;letter-spacing:.5px}
 
-        /* Tabs */
+        
         .tabs{display:flex;gap:.3rem;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:2rem}
         .tab{background:none;border:none;color:#666;padding:.8rem 1.4rem;cursor:pointer;font-family:'Andika',sans-serif;font-size:.95rem;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s;border-radius:0}
         .tab:hover{color:#fff}
@@ -85,7 +84,7 @@ $statusClass = ['new' => '#f59e0b', 'confirmed' => '#3b82f6', 'shipping' => '#8b
         .tab-content{display:none}
         .tab-content.active{display:block}
 
-        /* Table card */
+        
         .tcard{background:#1a1a1a;border:1px solid rgba(255,255,255,.06);border-radius:16px;overflow:hidden}
         .tcard-hdr{padding:1.1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06)}
         .tcard-hdr h2{font-size:1rem;color:#fff}
@@ -101,15 +100,15 @@ $statusClass = ['new' => '#f59e0b', 'confirmed' => '#3b82f6', 'shipping' => '#8b
         .email-link{color:#8b3a2b}
         .email-link:hover{text-decoration:underline}
 
-        /* Buttons */
+        
         .btn-del{background:rgba(239,68,68,.1);color:#f87171;border:1px solid rgba(239,68,68,.3);padding:.3rem .75rem;border-radius:6px;cursor:pointer;font-family:'Andika',sans-serif;font-size:.82rem;transition:all .2s}
         .btn-del:hover{background:#ef4444;color:#fff;border-color:#ef4444}
         .status-select{background:#252525;border:1px solid rgba(255,255,255,.1);color:#fff;padding:.3rem .6rem;border-radius:6px;font-family:'Andika',sans-serif;font-size:.82rem;cursor:pointer}
 
-        /* Empty */
+        
         .empty{padding:4rem 2rem;text-align:center;color:#444;font-size:1rem}
 
-        /* Order items popover */
+        
         .items-list{font-size:.82rem;color:#888;line-height:1.6}
 
         @media(max-width:700px){
@@ -134,7 +133,6 @@ $statusClass = ['new' => '#f59e0b', 'confirmed' => '#3b82f6', 'shipping' => '#8b
     <h1 class="adm-title">Дашборд</h1>
     <p class="adm-sub">Управління замовленнями та підписниками</p>
 
-    <!-- Stats -->
     <div class="stats">
         <div class="stat" style="--c:#22c55e">
             <div class="stat-l">Нові замовлення</div>
@@ -154,13 +152,13 @@ $statusClass = ['new' => '#f59e0b', 'confirmed' => '#3b82f6', 'shipping' => '#8b
         </div>
     </div>
 
-    <!-- Tabs -->
+    
     <div class="tabs">
         <button class="tab <?= $activeTab === 'orders' ? 'active' : '' ?>" data-tab="orders">📦 Замовлення</button>
         <button class="tab <?= $activeTab === 'subs' ? 'active' : '' ?>" data-tab="subs">📋 Підписники</button>
     </div>
 
-    <!-- ORDERS -->
+   
     <div class="tab-content <?= $activeTab === 'orders' ? 'active' : '' ?>" id="tab-orders">
         <div class="tcard">
             <div class="tcard-hdr">
@@ -216,7 +214,7 @@ $statusClass = ['new' => '#f59e0b', 'confirmed' => '#3b82f6', 'shipping' => '#8b
         </div>
     </div>
 
-    <!-- SUBSCRIBERS -->
+   
     <div class="tab-content <?= $activeTab === 'subs' ? 'active' : '' ?>" id="tab-subs">
         <div class="tcard">
             <div class="tcard-hdr">
@@ -261,7 +259,7 @@ document.querySelectorAll('.tab').forEach(btn => {
         document.querySelectorAll('.tab,.tab-content').forEach(el => el.classList.remove('active'));
         btn.classList.add('active');
         document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
-        // Update URL without reload
+        
         history.replaceState(null,'','?tab=' + btn.dataset.tab);
     });
 });

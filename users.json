@@ -1,1 +1,10 @@
-[]
+[
+    {
+        "username": "rsfsdf",
+        "email": "egorbh@gmail.com",
+        "password_hash": "$2y$10$TkmJLVb4YGjzhL7pEPHUVujTOGqVt3o8BZvFV2.hXNVi7CfIOYS7W",
+        "display_name": "wqe",
+        "role": "user",
+        "created_at": "2026-05-19 18:19:25"
+    }
+]
